@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Mapper
@@ -21,5 +22,5 @@ public interface TaskMapper {
         SELECT * FROM tasks
         WHERE id = #{id}
     """)
-    void findById(UUID id);
+    Optional<Task> findById(UUID id);
 }
