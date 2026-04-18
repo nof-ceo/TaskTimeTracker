@@ -69,9 +69,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDTO updateStatusById(UpdateTaskStatusDTO taskStatusDTO) throws TaskNotFoundException, TaskCreationException{
-        if (taskStatusDTO.status().equals(TaskStatus.DONE.name())
-                || taskStatusDTO.status().equals(TaskStatus.IN_PROGRESS.name())
-                || taskStatusDTO.status().equals(TaskStatus.NEW.name())) {
+        if (taskStatusDTO.status().equals(TaskStatus.DONE)
+                || taskStatusDTO.status().equals(TaskStatus.IN_PROGRESS)
+                || taskStatusDTO.status().equals(TaskStatus.NEW)) {
             int updated = taskMapper.updateStatusById(taskStatusDTO.id(), taskStatusDTO.status());
 
             if (updated == 0) {
