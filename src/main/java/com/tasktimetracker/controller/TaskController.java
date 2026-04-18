@@ -1,9 +1,8 @@
 package com.tasktimetracker.controller;
 
-import com.tasktimetracker.dto.jwt.JwtDTO;
 import com.tasktimetracker.dto.main.CreationTaskDTO;
 import com.tasktimetracker.dto.main.TaskDTO;
-import com.tasktimetracker.entity.Task;
+import com.tasktimetracker.dto.main.UpdateTaskStatusDTO;
 import com.tasktimetracker.service.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -13,7 +12,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -61,5 +59,22 @@ public class TaskController {
     @ResponseStatus(HttpStatus.FOUND)
     public TaskDTO findById(@Valid @RequestParam(name = "id") UUID id) {
         return taskService.findById(id);
+    }
+
+    @Operation(
+            summary = "Обновляет статус задачи"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Статус обновлен",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = TaskDTO.class))),
+            @ApiResponse(responseCode = "404", description = "Задача отсутствует",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "Неверный статус",
+                    content = @Content)
+    })
+    @PostMapping("/update")
+    @ResponseStatus(HttpStatus.FOUND)
+    public TaskDTO updateStatusById(@Valid @RequestBody UpdateTaskStatusDTO taskStatusDTO) {
+        return taskService.updateStatusById(taskStatusDTO);
     }
 }
