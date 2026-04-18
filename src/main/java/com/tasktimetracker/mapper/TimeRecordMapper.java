@@ -3,14 +3,15 @@ package com.tasktimetracker.mapper;
 import com.tasktimetracker.entity.TimeRecord;
 import org.apache.ibatis.annotations.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Mapper
 public interface TimeRecordMapper {
     @Insert("""
-        INSERT INTO time_records (employee_id, task_id, start_time, end_time, description)
-        VALUES (#{employeeId}, #{task.taskId}, #{startTime}, #{endTime}, #{description})
+        INSERT INTO time_records (id, employee_id, task_id, start_time, end_time, description)
+        VALUES (#{id}, #{employeeId}, #{taskId}, #{startTime}, #{endTime}, #{description})
     """)
     void insert(TimeRecord timeRecord);
 
@@ -47,4 +48,18 @@ public interface TimeRecordMapper {
             @Result(property = "task.status", column = "task_status")
     })
     List<TimeRecord> findByTaskId(UUID taskId);
+
+    @Select("""
+    SELECT *
+    FROM time_records
+    WHERE employee_id = #{employeeId}
+    AND start_time >= #{from}
+    AND end_time <= #{to}
+""")
+    
+    List<TimeRecord> findByEmployeeIdAndPeriod(
+            UUID employeeId,
+            LocalDateTime from,
+            LocalDateTime to
+    );
 }

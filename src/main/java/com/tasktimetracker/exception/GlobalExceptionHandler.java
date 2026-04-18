@@ -67,4 +67,9 @@ public class GlobalExceptionHandler {
     ResponseEntity<String> handleTaskNotFoundException(TaskNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(TimeRecordException.class)
+    ResponseEntity<String> handleTaskNotFoundException(TimeRecordException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }

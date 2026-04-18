@@ -6,11 +6,13 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record TimeRecordDTO (
+
+    UUID id,
     @Schema(description = "ID работника", example = "30928we-23few34-34rf34")
     UUID employeeId,
 
     @Schema(description = "ID задачи", example = "30928we-23few34-34rf34")
-    TaskDTO taskId,
+    UUID taskId,
 
     @Schema(description = "Время начала", example = "")
     LocalDateTime startTime,
