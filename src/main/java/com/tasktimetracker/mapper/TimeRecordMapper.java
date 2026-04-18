@@ -56,7 +56,6 @@ public interface TimeRecordMapper {
     AND start_time >= #{from}
     AND end_time <= #{to}
 """)
-    
     List<TimeRecord> findByEmployeeIdAndPeriod(
             UUID employeeId,
             LocalDateTime from,
