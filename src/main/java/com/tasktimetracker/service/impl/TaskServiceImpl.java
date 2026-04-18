@@ -2,7 +2,9 @@ package com.tasktimetracker.service.impl;
 
 import com.tasktimetracker.dto.main.CreationTaskDTO;
 import com.tasktimetracker.dto.main.TaskDTO;
+import com.tasktimetracker.exception.IdNullException;
 import com.tasktimetracker.exception.TaskCreationException;
+import com.tasktimetracker.exception.TaskNotFoundException;
 import com.tasktimetracker.mapper.TaskMapper;
 import com.tasktimetracker.mapper.TaskMapperDTO;
 import com.tasktimetracker.service.TaskService;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.tasktimetracker.entity.Task;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -52,8 +55,15 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDTO findById(UUID id) {
-        return null;
+    public TaskDTO findById(UUID id) throws IdNullException, TaskNotFoundException {
+        if (id == null)
+            throw new IdNullException("ID не должно быть пустым");
+
+        Optional<Task> task = taskMapper.findById(id);
+
+        if (task.isEmpty())
+            throw new TaskNotFoundException("Задача с данным ID не была найдена");
+        return taskMapperDTO.toDTO(task.get());
     }
 
     @Override
