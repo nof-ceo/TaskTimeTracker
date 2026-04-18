@@ -2,6 +2,7 @@ package com.tasktimetracker.service.impl;
 
 import com.tasktimetracker.dto.main.CreationTaskDTO;
 import com.tasktimetracker.dto.main.TaskDTO;
+import com.tasktimetracker.dto.main.UpdateTaskStatusDTO;
 import com.tasktimetracker.exception.IdNullException;
 import com.tasktimetracker.exception.TaskCreationException;
 import com.tasktimetracker.exception.TaskNotFoundException;
@@ -67,7 +68,18 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDTO updateStatusById(UUID id) {
-        return null;
+    public TaskDTO updateStatusById(UpdateTaskStatusDTO taskStatusDTO) throws TaskNotFoundException, TaskCreationException{
+        if (taskStatusDTO.status().equals(TaskStatus.DONE.name())
+                || taskStatusDTO.status().equals(TaskStatus.IN_PROGRESS.name())
+                || taskStatusDTO.status().equals(TaskStatus.NEW.name())) {
+            int updated = taskMapper.updateStatusById(taskStatusDTO.id(), taskStatusDTO.status());
+
+            if (updated == 0) {
+                throw new TaskNotFoundException("Задача не найдена");
+            }
+
+            return taskMapperDTO.toDTO(taskMapper.findById(taskStatusDTO.id()).get());
+        } else
+            throw new TaskCreationException("Неверный тип статуса, используйте: DONE, IN_PROGRESS, NEW");
     }
 }
