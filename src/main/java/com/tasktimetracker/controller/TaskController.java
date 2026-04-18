@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/task")
 @Tag(name = "Task", description = "Операции с задачами")
@@ -44,5 +46,20 @@ public class TaskController {
     @ResponseStatus(HttpStatus.CREATED)
     public TaskDTO createTask(@Valid @RequestBody CreationTaskDTO creationTaskDTO) {
         return taskService.createTask(creationTaskDTO);
+    }
+
+    @Operation(
+            summary = "Ищет задачу по ID"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Задача успешно найдена",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = TaskDTO.class))),
+            @ApiResponse(responseCode = "404", description = "Задача отсутствует",
+                    content = @Content)
+    })
+    @GetMapping("/find")
+    @ResponseStatus(HttpStatus.FOUND)
+    public TaskDTO findById(@Valid @RequestParam(name = "id") UUID id) {
+        return taskService.findById(id);
     }
 }
