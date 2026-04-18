@@ -1,10 +1,8 @@
 package com.tasktimetracker.mapper;
 
 import com.tasktimetracker.entity.Task;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import com.tasktimetracker.state.TaskStatus;
+import org.apache.ibatis.annotations.*;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -23,4 +21,11 @@ public interface TaskMapper {
         WHERE id = #{id}
     """)
     Optional<Task> findById(UUID id);
+
+    @Update("""
+        UPDATE tasks
+        SET status = #{status}
+        WHERE id = #{id}
+    """)
+    int updateStatusById(UUID id, TaskStatus status);
 }
