@@ -9,6 +9,9 @@ cd TaskTimeTracker
 docker-compose up --build
 Приложение будет доступно по адресу: http://localhost:8080
 Swagger документация: http://localhost:8080/swagger-ui/index.html
+<img width="1548" height="858" alt="Screenshot 2026-04-19 at 1 22 25 AM" src="https://github.com/user-attachments/assets/e7950222-1e2a-4828-9b86-f817ffd9daa4" />
+
+
 
 База данных
 
