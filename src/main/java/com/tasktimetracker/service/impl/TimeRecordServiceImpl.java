@@ -69,7 +69,10 @@ public class TimeRecordServiceImpl implements TimeRecordService {
 
         return records.stream()
                 .map(record -> {
-                    long duration =100;
+                    long duration = 0;
+                    if (record.getStartTime() != null && record.getEndTime() != null) {
+                        duration = Duration.between(record.getStartTime(), record.getEndTime()).toMinutes();
+                    }
 
                     return new TimeRecordWithDurationDTO(
                             record.getId(),
