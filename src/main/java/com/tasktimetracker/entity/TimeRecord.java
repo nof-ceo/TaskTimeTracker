@@ -1,5 +1,6 @@
 package com.tasktimetracker.entity;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode
 public class TimeRecord {
     private UUID id;
