@@ -56,4 +56,15 @@ public class GlobalExceptionHandler {
     ResponseEntity<String> handleTaskCreationException(TaskCreationException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+
+    @ExceptionHandler(IdNullException.class)
+    ResponseEntity<String> handleIdNullException(IdNullException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(TaskNotFoundException.class)
+    ResponseEntity<String> handleTaskNotFoundException(TaskNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }
